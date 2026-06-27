@@ -1,6 +1,7 @@
 from notion_client import Client
 import yfinance as yf
 import os
+from datetime import datetime
 
 # GitHub Secrets
 NOTION_TOKEN = os.environ["NOTION_TOKEN"]
@@ -36,6 +37,7 @@ for page in response["results"]:
             continue
 
         current_price = float(hist["Close"].iloc[-1])
+        update_time = datetime.utcnow().isoformat()
 
         # 현재가 업데이트
         notion.pages.update(
@@ -43,6 +45,11 @@ for page in response["results"]:
             properties={
                 "현재가": {
                     "number": current_price
+                },
+                "마지막 업데이트": {
+                    "date": {
+                        "start": update_time
+                    }
                 }
             }
         )
