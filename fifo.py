@@ -16,7 +16,11 @@ def process_fifo(grouped_trades):
     for ticker, trades in grouped_trades.items():
 
         queue = deque()
+
         remaining = {}
+
+        profit_by_sell = {}
+
         realized_profit = 0
 
         for trade in trades:
@@ -36,6 +40,11 @@ def process_fifo(grouped_trades):
 
                 sell_qty = trade["qty"]
 
+                # 매도 페이지는 잔량이 항상 0
+                remaining[trade["page_id"]] = 0
+
+                sell_profit = 0
+
                 while sell_qty > 0:
 
                     oldest = queue[0]
@@ -45,9 +54,13 @@ def process_fifo(grouped_trades):
                         oldest["qty"]
                     )
 
-                    realized_profit += (
+                    profit = (
                         trade["price"] - oldest["price"]
                     ) * matched
+
+                    realized_profit += profit
+
+                    sell_profit += profit
 
                     oldest["qty"] -= matched
                     sell_qty -= matched
@@ -55,9 +68,11 @@ def process_fifo(grouped_trades):
 
                     if oldest["qty"] == 0:
                         queue.popleft()
-
+                    profit_by_sell[trade["page_id"]] = sell_profit
+                    
         results[ticker] = {
             "remaining": remaining,
+            "profit_by_sell": profit_by_sell,
             "profit": realized_profit
         }
 
