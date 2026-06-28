@@ -17,12 +17,22 @@ for ticker, result in results.items():
 
     print("잔량")
 
+    # 매수/매도 잔량 기록
     for page_id, qty in result["remaining"].items():
-        print(page_id, qty)
+
+        update_trade_page(
+            page_id=page_id,
+            remaining=qty
+        )
 
     print("매도별 실현수익")
 
+    # 매도 실현수익 기록
     for page_id, profit in result["profit_by_sell"].items():
-        print(page_id, profit)
+
+        update_trade_page(
+            page_id=page_id,
+            profit=profit
+        )
 
     print("누적 실현수익:", result["profit"])
