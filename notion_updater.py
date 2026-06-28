@@ -6,13 +6,13 @@ NOTION_TOKEN = os.environ["NOTION_TOKEN"]
 notion = Client(auth=NOTION_TOKEN)
 
 
-def update_trade(page_id, qty=None, profit=None):
+def update_trade_page(page_id, remaining=None, profit=None):
 
     properties = {}
 
-    if qty is not None:
+    if remaining is not None:
         properties["잔량"] = {
-            "number": qty
+            "number": remaining
         }
 
     if profit is not None:
