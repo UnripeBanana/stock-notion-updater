@@ -32,6 +32,8 @@ for page in response["results"]:
 
         info = stock.info
         market_cap = info.get("marketCap", 0)
+        print(info.keys())
+        print("시가총액:", market_cap)
 
         if market_cap is None:
             market_cap = 0
