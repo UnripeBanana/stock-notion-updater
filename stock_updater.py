@@ -73,31 +73,34 @@ for page in response["results"]:
             ZoneInfo("Asia/Seoul")
         ).strftime("%Y-%m-%d %H:%M")
 
-        # 현재가 업데이트
+        # 업데이트 할 정보들 모음
+        properties = {
+            "현재가_깃허브_원본": {
+                "number": current_price
+            },
+            "전일대비_깃허브": {
+                "number": change
+            },
+            "시가총액_깃허브": {
+                "number": market_cap
+            },
+            "52주 최고가": {
+                "number": high_52
+            },
+            "52주 최저가": {
+                "number": low_52
+            },
+            "통화": rich_text(currency),
+            "국가": rich_text(country),
+            "업종": rich_text(sector),
+            "산업": rich_text(industry),
+            "마지막 업데이트": rich_text(update_time)
+        }
+        
+        # 데이터 업데이트
         notion.pages.update(
             page_id=page["id"],
-            properties={
-                "현재가_깃허브_원본": {
-                    "number": current_price
-                },
-                "전일대비_깃허브": {
-                    "number": change
-                },
-                "시가총액_깃허브": {
-                    "number": market_cap
-                },
-                "52주 최고가": {
-                    "number": high_52
-                },
-                "52주 최저가": {
-                    "number": low_52
-                },
-                "통화": rich_text(currency),
-                "국가": rich_text(country),
-                "업종": rich_text(sector),
-                "산업": rich_text(industry),
-                "마지막 업데이트": rich_text(update_time)
-            }
+            properties = properties
         )
 
         print(
