@@ -59,13 +59,13 @@ for page in response["results"]:
         notion.pages.update(
             page_id=page["id"],
             properties={
-                "현재가": {
+                "현재가_깃허브_원본": {
                     "number": current_price
                 },
-                "전일대비": {
+                "전일대비_깃허브": {
                     "number": change
                 },
-                "시가총액": {
+                "시가총액_깃허브": {
                     "number": market_cap
                 },
                 "마지막 업데이트": {
