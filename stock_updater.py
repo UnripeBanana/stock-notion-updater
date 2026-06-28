@@ -31,7 +31,10 @@ for page in response["results"]:
         stock = yf.Ticker(ticker)
 
         info = stock.info
-        market_cap = info.get("marketCap")
+        market_cap = info.get("marketCap", 0)
+
+        if market_cap is None:
+            market_cap = 0
 
         # 최근 2거래일 데이터 조회
         hist = stock.history(period="5d")
@@ -76,7 +79,10 @@ for page in response["results"]:
             }
         )
 
-        print(f"✅ {ticker} → {current_price}")
+        print(
+            f"✅ {ticker} | 현재가: {current_price:,.0f}"
+            f"전일대비: {change:+,.0f}"
+        )
 
     except Exception as e:
         print(f"❌ {ticker} 오류: {e}")
