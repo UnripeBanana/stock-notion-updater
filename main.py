@@ -14,9 +14,14 @@ for ticker, result in results.items():
 
     print(f"\n===== {ticker} =====")
 
-    print("총 실현수익:", result["profit"])
-
     print("잔량")
 
     for page_id, qty in result["remaining"].items():
         print(page_id, qty)
+
+    print("매도별 실현수익")
+
+    for page_id, profit in result["profit_by_sell"].items():
+        print(page_id, profit)
+
+    print("누적 실현수익:", result["profit"])
