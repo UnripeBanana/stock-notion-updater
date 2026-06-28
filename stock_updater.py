@@ -4,6 +4,18 @@ import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+def rich_text(value):
+    return {
+        "rich_text": [
+            {
+                "type": "text",
+                "text": {
+                    "content": str(value) if value else ""
+                }
+            }
+        ]
+    }
+
 NOTION_TOKEN = os.environ["NOTION_TOKEN"]
 DATABASE_ID = os.environ["NOTION_PRICE_DB_ID"]
 
