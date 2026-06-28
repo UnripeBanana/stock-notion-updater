@@ -1,3 +1,11 @@
+from notion_client import Client
+import os
+
+NOTION_TOKEN = os.environ["NOTION_TOKEN"]
+DATABASE_ID = os.environ["NOTION_PRICE_DB_ID"]
+
+notion = Client(auth=NOTION_TOKEN)
+
 def update_stock_prices():
 
     # 데이터베이스 조회
