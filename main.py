@@ -1,6 +1,7 @@
 from trade_reader import read_trade_db
 from fifo import group_by_ticker
 from fifo import process_fifo
+from notion_updater import update_trade_page
 
 trades = read_trade_db()
 
