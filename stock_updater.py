@@ -4,6 +4,18 @@ import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+def rich_text(value):
+    return {
+        "rich_text": [
+            {
+                "type": "text",
+                "text": {
+                    "content": str(value) if value else ""
+                }
+            }
+        ]
+    }
+
 # GitHub Secrets
 NOTION_TOKEN = os.environ["NOTION_TOKEN"]
 DATABASE_ID = os.environ["NOTION_DATABASE_ID"]
@@ -32,12 +44,18 @@ for page in response["results"]:
 
         info = stock.info
         market_cap = info.get("marketCap", 0)
-        print(info.keys())
-        print("시가총액:", market_cap)
-
         if market_cap is None:
             market_cap = 0
 
+        high_52 = info.get("fiftyTwoWeekHigh")
+        low_52 = info.get("fiftyTwoWeekLow")
+
+        currency = info.get("currency")
+        country = info.get("country")
+        sector = info.get("sector")
+        industry = info.get("industry")
+        
+        
         # 최근 2거래일 데이터 조회
         hist = stock.history(period="5d")
 
@@ -68,16 +86,17 @@ for page in response["results"]:
                 "시가총액_깃허브": {
                     "number": market_cap
                 },
-                "마지막 업데이트": {
-                    "rich_text": [
-                        {
-                            "type": "text",
-                            "text": {
-                                "content": update_time
-                            }
-                        }
-                    ]
-                }
+                "52주 최고가": {
+                    "number": high_52
+                },
+                "52주 최저가": {
+                    "number": low_52
+                },
+                "통화": rich_text(currency),
+                "국가": rich_text(country),
+                "업종": rich_text(sector),
+                "산업": rich_text(industry),
+                "마지막 업데이트": rich_text(update_time)
             }
         )
 
