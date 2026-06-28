@@ -30,14 +30,19 @@ for page in response["results"]:
     try:
         stock = yf.Ticker(ticker)
 
-        # 현재가 가져오기
-        hist = stock.history(period="1d")
+        # 최근 2거래일 데이터 조회
+        hist = stock.history(period="5d")
 
-        if hist.empty:
-            print(f"{ticker}: 주가 정보를 찾을 수 없음")
+        if len(hist) < 2:
+            print(f"{ticker}: 데이터 부족")
             continue
 
         current_price = float(hist["Close"].iloc[-1])
+        previous_price = float(hist["Close"].iloc[-2])
+
+        change = current_price - previous_price
+
+        
         update_time = datetime.now(
             ZoneInfo("Asia/Seoul")
         ).strftime("%Y-%m-%d %H:%M")
@@ -48,6 +53,9 @@ for page in response["results"]:
             properties={
                 "현재가": {
                     "number": current_price
+                },
+                "전일대비": {
+                    "number": change
                 },
                 "마지막 업데이트": {
                     "rich_text": [
