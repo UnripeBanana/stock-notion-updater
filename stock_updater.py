@@ -1,5 +1,8 @@
 from notion_client import Client
+import yfinance as yf
 import os
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 NOTION_TOKEN = os.environ["NOTION_TOKEN"]
 DATABASE_ID = os.environ["NOTION_PRICE_DB_ID"]
