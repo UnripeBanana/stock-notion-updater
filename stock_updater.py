@@ -18,7 +18,7 @@ def rich_text(value):
 
 # GitHub Secrets
 NOTION_TOKEN = os.environ["NOTION_TOKEN"]
-DATABASE_ID = os.environ["NOTION_DATABASE_ID"]
+DATABASE_ID = os.environ["NOTION_PRICE_DB_ID"]
 
 # Notion 연결
 notion = Client(auth=NOTION_TOKEN)
