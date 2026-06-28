@@ -19,7 +19,7 @@ for page in response["results"]:
     props = page["properties"]
 
     # 티커 읽기 (Text 속성)
-    ticker_data = props["티커"]["rich_text"]
+    ticker_data = props["현재가 DB_티커"]["rich_text"]
 
     if len(ticker_data) == 0:
         print("티커가 비어있어 건너뜀")
