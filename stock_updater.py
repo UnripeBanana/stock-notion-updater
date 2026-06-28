@@ -30,6 +30,9 @@ for page in response["results"]:
     try:
         stock = yf.Ticker(ticker)
 
+        info = stock.info
+        market_cap = info.get("marketCap")
+
         # 최근 2거래일 데이터 조회
         hist = stock.history(period="5d")
 
@@ -56,6 +59,9 @@ for page in response["results"]:
                 },
                 "전일대비": {
                     "number": change
+                },
+                "시가총액": {
+                    "number": market_cap
                 },
                 "마지막 업데이트": {
                     "rich_text": [
