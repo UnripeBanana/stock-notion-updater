@@ -40,7 +40,7 @@ def read_trade_db():
 
             "price": props["단가"]["number"],
 
-            "amount": props["거래금액"]["number"]
+            "amount": props["거래금액"]["formula"]
 
         }
 
