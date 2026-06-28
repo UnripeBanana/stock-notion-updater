@@ -2,4 +2,5 @@ from trade_reader import read_trade_db
 
 trades = read_trade_db()
 
-print(trades[0]["properties"].keys())
+for trade in trades:
+    print(trade)
